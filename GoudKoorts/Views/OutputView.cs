@@ -24,25 +24,76 @@ namespace GoudKoorts.Views
             {typeof(QueueableSquare), 7},
         };
 
+        private List<ConsoleColor> _colors = new List<ConsoleColor>() {
+            ConsoleColor.Red,
+            ConsoleColor.Yellow,
+            ConsoleColor.Green,
+            ConsoleColor.Blue,
+            ConsoleColor.Magenta
+        };
+
+        private int _color = 0;
+
         public void Print(Square square)
         {
             Clear();
+            _color = 0;
 
             while (square != null)
             {
                 Square westSquare = square;
-                String line = "";
 
                 while (westSquare != null)
                 {
-                    line += SquareToChar(westSquare);
+                    char c = SquareToChar(westSquare);
+
+                    PrintChar(c, westSquare);
 
                     westSquare = westSquare.NeighbourEast;
                 }
 
+                Console.Write("\n");
                 square = square.NeighbourSouth;
-                Console.WriteLine(line);
             }
+
+            PrintColorLine();
+        }
+
+        public void PrintColorLine()
+        {
+            Console.Write("\nWhich switch do you want to open? (press ");
+
+            for (int i = 0; i < _colors.Count; i++)
+            {
+                Console.ForegroundColor = _colors[i];
+                Console.Write(i + 1);
+                Console.ForegroundColor = ConsoleColor.White;
+
+                if (i != _colors.Count - 1)
+                {
+                    Console.Write(", ");
+                }
+            }
+
+            Console.Write("): ");
+        }
+
+        private void PrintChar(char c, Square square)
+        {
+            int type = types[square.GetType()];
+
+            if (type == 4)
+            {
+                Console.ForegroundColor = _colors[_color];
+                _color++;
+            }
+            else if (type == 7)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+
+            Console.Write(c);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public char SquareToChar(Square square)

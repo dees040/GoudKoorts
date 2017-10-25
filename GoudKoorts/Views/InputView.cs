@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 namespace GoudKoorts.Views
 {
     class InputView
-    {
+    {     
         public int GetOption()
         {
-            Console.WriteLine("\nWhich switch do you want to open? (press: 1, 2, 3, 4, 5):");
-
             char input = Console.ReadKey().KeyChar;
 
             if (IncorrectInput(input))

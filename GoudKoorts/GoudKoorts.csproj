@@ -48,6 +48,7 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\Parser.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="Events\PointsEarnedEventArgs.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Game.cs" />

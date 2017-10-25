@@ -21,6 +21,14 @@ namespace GoudKoorts.Models
 
         public int Points { get; set; }
 
+        public int Level
+        {
+            get
+            {
+                return (int)Math.Ceiling((double)Points / 5);
+            }
+        }
+
         private Random _random = new Random();
 
         public Game()
@@ -49,7 +57,12 @@ namespace GoudKoorts.Models
 
         public void PrepareSwitchToggle(int index)
         {
-            Switches[index].Toggle();
+            SwitchableSquare square = Switches[index];
+
+            if (square.Cart == null)
+            {
+                square.Toggle();
+            }
         }
 
         public void CreateCarts(EventHandler stopEvent)

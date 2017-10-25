@@ -73,9 +73,11 @@ namespace GoudKoorts.Controllers
 
         private int CalculateTime()
         {
-            int startingTime = 1000;
+            int startingTime = 2000;
 
-            return startingTime;
+            startingTime = startingTime - (_game.Level * 50);
+
+            return startingTime < 500 ? 500 : startingTime;
         }
 
         private void Quit()
