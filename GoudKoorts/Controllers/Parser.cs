@@ -31,12 +31,12 @@ namespace GoudKoorts.Controllers
 
                     if (square is SwitchableSquare)
                     {
-                        map.Switches.Add(_switches, (SwitchableSquare) square);
+                        map.Switches.Add(_switches, square as SwitchableSquare);
                         _switches++;
                     }
                     else if (square is StartingSquare)
                     {
-                        map.StartingPoints.Add((StartingSquare) square);
+                        map.StartingPoints.Add(square as StartingSquare);
                     }
 
                     SetNeighbours(square, north, west);

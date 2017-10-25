@@ -59,18 +59,18 @@ namespace GoudKoorts.Views
                     break;
                 case 2:
                 case 7:
-                    LineSquare lineSquare = (LineSquare)square;
+                    LineSquare lineSquare = square as LineSquare;
 
                     c = lineSquare.Alignment == Alignment.Horizontal ? '-' : '|';
                     break;
                 case 3:
-                    StartingSquare startingSquare = (StartingSquare)square;
+                    StartingSquare startingSquare = square as StartingSquare;
 
                     c = startingSquare.Index;
                     break;
                 case 4:
                 case 5:
-                    CornerSquare cornerSquare = (CornerSquare)square;
+                    CornerSquare cornerSquare = square as CornerSquare;
 
                     if (cornerSquare.Beginning == Direction.West)
                     {
@@ -103,7 +103,7 @@ namespace GoudKoorts.Views
 
             if (square is StandableSquare)
             {
-                StandableSquare standableSquare = (StandableSquare) square;
+                StandableSquare standableSquare = square as StandableSquare;
 
                 if (standableSquare.Cart != null)
                 {

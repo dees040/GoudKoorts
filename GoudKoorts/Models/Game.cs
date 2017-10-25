@@ -1,4 +1,5 @@
-﻿using GoudKoorts.Models.Squares.Static;
+﻿using GoudKoorts.Events;
+using GoudKoorts.Models.Squares.Static;
 using GoudKoorts.Models.Standable;
 using System;
 using System.Collections.Generic;
@@ -55,16 +56,17 @@ namespace GoudKoorts.Models
         {
             int chance = _random.Next(10);
 
-            if (chance > 7 || Carts.Count == 0)
+            if (chance > 8 || Carts.Count == 0)
             {
                 int startingPoint = _random.Next(StartingPoints.Count);
 
                 Cart cart = new Cart();
 
-                StandableSquare standable = (StandableSquare)StartingPoints[startingPoint].NeighbourEast;
+                StandableSquare standable = StartingPoints[startingPoint].NeighbourEast as StandableSquare;
                 standable.Cart = cart;
                 cart.Square = standable;
-                cart.SomethingHappened += stopEvent;
+                cart.CartHasCollision += stopEvent;
+                cart.CartEarnedPoints += EarnedPoints;
                 Carts.Add(cart);
             }
         }
@@ -87,6 +89,11 @@ namespace GoudKoorts.Models
             {
                 Carts.Remove(cart);
             }
+        }
+
+        public void EarnedPoints(object sender, EventArgs args)
+        {
+            Points += (args as PointsEarnedEventArgs).Points;
         }
     }
 }

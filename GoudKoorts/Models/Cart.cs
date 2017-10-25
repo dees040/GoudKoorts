@@ -1,4 +1,5 @@
-﻿using GoudKoorts.Models.Squares.Standable;
+﻿using GoudKoorts.Events;
+using GoudKoorts.Models.Squares.Standable;
 using GoudKoorts.Models.Standable;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace GoudKoorts.Models
 
         public bool InQueue { get; set; }
 
-        public event EventHandler SomethingHappened;
+        public event EventHandler CartHasCollision;
+        public event EventHandler CartEarnedPoints;
 
         public Cart()
         {
@@ -44,7 +46,7 @@ namespace GoudKoorts.Models
 
             if (HasCollision(next))
             {
-                SomethingHappened?.Invoke(this, EventArgs.Empty);
+                CartHasCollision?.Invoke(this, EventArgs.Empty);
 
                 return;
             }
@@ -60,7 +62,7 @@ namespace GoudKoorts.Models
                 if (next is SwitchableSquare)
                 {
                     // Check if switch is open.
-                    SwitchableSquare switchable = (SwitchableSquare)next;
+                    SwitchableSquare switchable = next as SwitchableSquare;
 
                     if (! switchable.AccessableFrom(Direction))
                     {
@@ -70,8 +72,14 @@ namespace GoudKoorts.Models
                     }
                 }
 
-                CornerSquare corner = (CornerSquare)next;
+                CornerSquare corner = next as CornerSquare;
                 Direction = corner.GetOutgoingDirection(Direction);
+            }
+
+            if (next is DockSquare)
+            {
+                // TODO: Check if ship is connected!
+                CartEarnedPoints?.Invoke(this, new PointsEarnedEventArgs(1));
             }
 
             UpdateLocation(next);
@@ -102,7 +110,7 @@ namespace GoudKoorts.Models
 
         private void UpdateLocation(Square next)
         {
-            StandableSquare standable = (StandableSquare)next;
+            StandableSquare standable = next as StandableSquare;
 
             Square.Cart = null;
             Square = standable;
