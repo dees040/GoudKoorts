@@ -165,6 +165,13 @@ namespace GoudKoorts.Views
             return c;
         }
 
+        public void PrintFinalMessage(int points)
+        {
+            Console.WriteLine("\n\nThe carts have collision, game over.. You ended with " + points + " points.");
+            Console.WriteLine("Press q to exit.");
+            Console.ReadKey();
+        }
+
         public void Clear()
         {
             Console.Clear();

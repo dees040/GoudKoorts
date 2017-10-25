@@ -104,6 +104,19 @@ namespace GoudKoorts.Models
             }
         }
 
+        public bool HasEnded()
+        {
+            foreach (Cart cart in Carts)
+            {
+                if (cart.HasCollision())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void EarnedPoints(object sender, EventArgs args)
         {
             Points += (args as PointsEarnedEventArgs).Points;

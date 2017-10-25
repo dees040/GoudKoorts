@@ -15,6 +15,7 @@ namespace GoudKoorts.Controllers
         private OutputView _outputView = new OutputView();
         private InputView _inputView = new InputView();
         private Game _game;
+        private Thread _timer;
 
         public GameController()
         {
@@ -23,22 +24,31 @@ namespace GoudKoorts.Controllers
 
         public void Start()
         {
-            Thread timerThread = new Thread(new ThreadStart(RunTimer));
-            timerThread.Start();
+            _timer = new Thread(new ThreadStart(RunTimer));
+            _timer.Start();
 
             Play();
         }
 
         public void Stop(object sender, EventArgs args)
         {
-            Console.WriteLine("Game stopped!");
+            _timer.Abort();
         }
 
         private void Play()
         {
-            _outputView.Print(_game.GetNorthWestSquare());
+            if (_game.HasEnded())
+            {
+                _outputView.Print(_game.GetNorthWestSquare());
 
-            HandleInput(_inputView.GetOption());
+                _outputView.PrintFinalMessage(_game.Points);
+            }
+            else
+            {
+                _outputView.Print(_game.GetNorthWestSquare());
+
+                HandleInput(_inputView.GetOption());
+            }
         }
 
         private void HandleInput(int option)
@@ -57,7 +67,16 @@ namespace GoudKoorts.Controllers
 
         private void RunTimer()
         {
-            Task.Delay(CalculateTime()).ContinueWith(t => HandleCarts());
+            if (_game.HasEnded())
+            {
+                _outputView.Print(_game.GetNorthWestSquare());
+
+                _outputView.PrintFinalMessage(_game.Points);
+            }
+            else
+            {
+                Task.Delay(CalculateTime()).ContinueWith(t => HandleCarts());
+            }
         }
 
         private void HandleCarts()

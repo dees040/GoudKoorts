@@ -85,6 +85,11 @@ namespace GoudKoorts.Models
             UpdateLocation(next);
         }
 
+        public bool HasCollision()
+        {
+            return HasCollision(Square.Next(Direction));
+        }
+
         public bool HasCollision(StandableSquare next)
         {
             if (next.Cart == null)
