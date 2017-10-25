@@ -51,19 +51,20 @@ namespace GoudKoorts.Models
             Switches[index].Toggle();
         }
 
-        public void CreateCarts()
+        public void CreateCarts(EventHandler stopEvent)
         {
             int chance = _random.Next(10);
 
-            if (chance > 8 || Carts.Count == 0)
+            if (chance > 7 || Carts.Count == 0)
             {
-                int startingPoint = _random.Next(StartingPoints.Count - 1);
+                int startingPoint = _random.Next(StartingPoints.Count);
 
                 Cart cart = new Cart();
 
                 StandableSquare standable = (StandableSquare)StartingPoints[startingPoint].NeighbourEast;
                 standable.Cart = cart;
                 cart.Square = standable;
+                cart.SomethingHappened += stopEvent;
                 Carts.Add(cart);
             }
         }

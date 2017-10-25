@@ -1,4 +1,5 @@
 ﻿using GoudKoorts.Models;
+using GoudKoorts.Models.Squares.Standable;
 using GoudKoorts.Models.Squares.Static;
 using GoudKoorts.Models.Standable;
 using System;
@@ -117,6 +118,8 @@ namespace GoudKoorts.Controllers
                     return new CornerSquare(Direction.North, Direction.East);
                 case 'k':
                     return new DockSquare();
+                case '=':
+                    return new QueueableSquare(Alignment.Horizontal);
                 default:
                     throw new Exception("Character not recoginized");
             }

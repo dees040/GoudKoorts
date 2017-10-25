@@ -1,4 +1,5 @@
-﻿using GoudKoorts.Models.Standable;
+﻿using GoudKoorts.Models.Squares.Standable;
+using GoudKoorts.Models.Standable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace GoudKoorts.Models
 
         public bool InQueue { get; set; }
 
+        public event EventHandler SomethingHappened;
+
         public Cart()
         {
             Direction = Direction.East;
@@ -23,10 +26,16 @@ namespace GoudKoorts.Models
 
         public void Move()
         {
-            StandableSquare next = GetNext();
+            StandableSquare next = Square.Next(Direction);
 
             if (next == null)
             {
+                if (Square is QueueableSquare)
+                {
+                    InQueue = true;
+                    return;
+                }
+
                 Square.Cart = null;
                 Square = null;
 
@@ -35,7 +44,14 @@ namespace GoudKoorts.Models
 
             if (HasCollision(next))
             {
-                // End game
+                SomethingHappened?.Invoke(this, EventArgs.Empty);
+
+                return;
+            }
+
+            // If the next statement is true, then he is on the queuebale sqaures.
+            if (InQueue && next.Cart != null && next.Cart.InQueue)
+            {
                 return;
             }
 
@@ -68,7 +84,20 @@ namespace GoudKoorts.Models
                 return false;
             }
 
-            return next.Cart.InQueue;
+            // If the other car is not in queue they are riding very closely together.
+            if (!next.Cart.InQueue)
+            {
+                return false;
+            }
+
+            if (next.Cart.Square is QueueableSquare && Square is QueueableSquare)
+            {
+                InQueue = true;
+
+                return false;
+            }
+
+            return true;
         }
 
         private void UpdateLocation(Square next)
@@ -79,37 +108,6 @@ namespace GoudKoorts.Models
             Square = standable;
             Square.Cart = this;
             this.InQueue = false;
-        }
-
-        private StandableSquare GetNext()
-        {
-            Square square;
-
-            switch (Direction)
-            {
-                case Direction.North:
-                    square = Square.NeighbouNorth;
-                    break;
-                case Direction.East:
-                    square = Square.NeighbourEast;
-                    break;
-                case Direction.South:
-                    square = Square.NeighbourSouth;
-                    break;
-                case Direction.West:
-                    square = Square.NeighbourWest;
-                    break;
-                default:
-                    square = null;
-                    break;
-            }
-
-            if (square != null && !(square is StandableSquare))
-            {
-                throw new Exception("Something went wrong in the path");
-            }
-
-            return (StandableSquare)square;
         }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="Models\Squares\Standable\CornerSquare.cs" />
     <Compile Include="Models\Squares\Standable\DockSquare.cs" />
     <Compile Include="Models\Squares\Standable\LineSquare.cs" />
+    <Compile Include="Models\Squares\Standable\QueueableSquare.cs" />
     <Compile Include="Models\Squares\Standable\StandableSquare.cs" />
     <Compile Include="Models\Squares\Standable\SwitchableSquare.cs" />
     <Compile Include="Models\Squares\Square.cs" />

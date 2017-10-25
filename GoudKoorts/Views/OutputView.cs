@@ -1,4 +1,5 @@
 ﻿using GoudKoorts.Models;
+using GoudKoorts.Models.Squares.Standable;
 using GoudKoorts.Models.Squares.Static;
 using GoudKoorts.Models.Standable;
 using System;
@@ -20,6 +21,7 @@ namespace GoudKoorts.Views
             {typeof(SwitchableSquare), 4},
             {typeof(CornerSquare), 5},
             {typeof(DockSquare), 6},
+            {typeof(QueueableSquare), 7},
         };
 
         public void Print(Square square)
@@ -56,6 +58,7 @@ namespace GoudKoorts.Views
                     c = '.';
                     break;
                 case 2:
+                case 7:
                     LineSquare lineSquare = (LineSquare)square;
 
                     c = lineSquare.Alignment == Alignment.Horizontal ? '-' : '|';

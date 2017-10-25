@@ -29,6 +29,11 @@ namespace GoudKoorts.Controllers
             Play();
         }
 
+        public void Stop(object sender, EventArgs args)
+        {
+            Console.WriteLine("Game stopped!");
+        }
+
         private void Play()
         {
             _outputView.Print(_game.GetNorthWestSquare());
@@ -59,7 +64,7 @@ namespace GoudKoorts.Controllers
         {
             _game.MoveCarts();
 
-            _game.CreateCarts();
+            _game.CreateCarts(Stop);
 
             _outputView.Print(_game.GetNorthWestSquare());
 
