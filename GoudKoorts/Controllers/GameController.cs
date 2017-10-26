@@ -98,7 +98,7 @@ namespace GoudKoorts.Controllers
         {
             int startingTime = 2000;
 
-            startingTime = startingTime - (_game.Level * 50);
+            startingTime = startingTime - _game.Points * 25;
 
             return startingTime < 500 ? 500 : startingTime;
         }

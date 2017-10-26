@@ -23,18 +23,11 @@ namespace GoudKoorts.Models
 
         public int Points { get; set; }
 
-        public int Level
-        {
-            get
-            {
-                return (int)Math.Ceiling((double)Points / 5);
-            }
-        }
-
         private Random _random = new Random();
 
         public Game()
         {
+            Points = 0;
             Carts = new List<Cart>();
             StartingPoints = new List<StartingSquare>();
             Switches = new Dictionary<int, SwitchableSquare>();
@@ -86,9 +79,9 @@ namespace GoudKoorts.Models
 
         public void CreateCarts(EventHandler stopEvent)
         {
-            int chance = _random.Next(10);
+            int chance = _random.Next(11);
 
-            if (chance > 8 || Carts.Count == 0)
+            if (chance > CalculateChance() || Carts.Count == 0)
             {
                 int startingPoint = _random.Next(StartingPoints.Count);
 
@@ -109,12 +102,19 @@ namespace GoudKoorts.Models
             {
                 int chance = _random.Next(10);
 
-                if (chance > 8)
+                if (chance > CalculateChance())
                 {
                     WaterSquare beginSquare = GetNorthEastSquare() as WaterSquare;
                     Ship = new Ship(beginSquare);
                 }
             }
+        }
+
+        public int CalculateChance()
+        {
+            int chance = 10 - Points / 10;
+
+            return chance < 3 ? 3 : chance;
         }
 
         public void MoveCarts()

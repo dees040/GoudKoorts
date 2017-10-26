@@ -60,7 +60,7 @@ namespace GoudKoorts.Models
             }
         }
 
-        internal void AddLoad()
+        public void AddLoad()
         {
             Loads++;
         }
