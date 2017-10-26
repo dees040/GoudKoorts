@@ -13,7 +13,7 @@
   <Class Name="GoudKoorts.Controllers.GameController">
     <Position X="14" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAACAACABAAAAAIAABAAAAAEAAAAAoAAAACAAAQQ=</HashCode>
+      <HashCode>CAAAAACAACAgCAAAAIAABAAAAAEAAAAAoAAAACAAAQQ=</HashCode>
       <FileName>Controllers\GameController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -46,14 +46,14 @@
   <Class Name="GoudKoorts.Models.Cart" Collapsed="true">
     <Position X="10.75" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQCAIAAAhAAACAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>BAAAAAQAAIAAAhAAACAAAAAAAAAAIAAAAAAgAAAAAAA=</HashCode>
       <FileName>Models\Cart.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GoudKoorts.Models.Ship" Collapsed="true">
-    <Position X="10.75" Y="7.5" Width="1.5" />
+    <Position X="10.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAAIAAAAAAAAAAAAAAAAAAQAAABABAAAAAAAA=</HashCode>
       <FileName>Models\Ship.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -63,7 +63,7 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAABAAAAAAACAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAEAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Models\Squares\Square.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -89,7 +89,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GoudKoorts.Models.Standable.StandableSquare" Collapsed="true">
-    <Position X="11.25" Y="10.75" Width="1.5" />
+    <Position X="11.25" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Squares\Standable\StandableSquare.cs</FileName>
@@ -116,13 +116,6 @@
       <FileName>Models\Squares\Static\StartingSquare.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GoudKoorts.Models.Squares.Static.WaterSquare" Collapsed="true">
-    <Position X="16.5" Y="12.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Squares\Static\WaterSquare.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="GoudKoorts.Models.Game">
     <Position X="14" Y="6.25" Width="1.5" />
     <Compartments>
@@ -131,11 +124,12 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AACAAAAACQAAgAAAAIAACAQAAAAAAAAAAAAgCAAAAAE=</HashCode>
+      <HashCode>AACAAAAACQAAgAAAAIAESAQAAAiAAAABACAiCAAAAAE=</HashCode>
       <FileName>Models\Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Square" />
+      <Property Name="Ship" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Carts" />
@@ -151,7 +145,7 @@
   <Class Name="GoudKoorts.Views.OutputView" Collapsed="true">
     <Position X="12.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJEAAA=</HashCode>
+      <HashCode>AAAIAAAAACAIAAACAAAAAAAAAAQAQAAAAAAAAAJFAAA=</HashCode>
       <FileName>Views\OutputView.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -168,6 +162,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Squares\Standable\QueueableSquare.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GoudKoorts.Models.Standable.WaterSquare" Collapsed="true">
+    <Position X="6" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Squares\Standable\WaterSquare.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="GoudKoorts.Alignment">

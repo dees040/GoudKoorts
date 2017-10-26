@@ -34,7 +34,7 @@ namespace GoudKoorts.Views
 
         private int _color = 0;
 
-        public void Print(Square square)
+        public void Print(Square square, int score)
         {
             Clear();
             _color = 0;
@@ -55,6 +55,7 @@ namespace GoudKoorts.Views
                 Console.Write("\n");
                 square = square.NeighbourSouth;
             }
+            PrintScore(score);
 
             PrintColorLine();
         }
@@ -78,11 +79,16 @@ namespace GoudKoorts.Views
             Console.Write("): ");
         }
 
+        public void PrintScore(int score)
+        {
+            Console.WriteLine("\nYour score is: " + score + " points.");
+        }
+
         private void PrintChar(char c, Square square)
         {
             int type = types[square.GetType()];
 
-            if (type == 4)
+            if (type == 4 && _color < _colors.Count)
             {
                 Console.ForegroundColor = _colors[_color];
                 _color++;
@@ -159,6 +165,24 @@ namespace GoudKoorts.Views
                 if (standableSquare.Cart != null)
                 {
                     c = '#';
+                }
+                else if (standableSquare is WaterSquare && (standableSquare as WaterSquare).Ship != null)
+                {
+                    int index = ((standableSquare as WaterSquare).Ship.Squares.ToList().IndexOf((standableSquare as WaterSquare)));
+                    switch (index)
+                    {
+                        case 0:
+                            c = '<';
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                            c = '=';
+                            break;
+                        case 4:
+                            c = '>';
+                            break;
+                    }
                 }
             }
 

@@ -58,7 +58,7 @@ namespace GoudKoorts.Controllers
         {
             if (north != null)
             {
-                square.NeighbouNorth = north;
+                square.NeighbourNorth = north;
                 north.NeighbourSouth = square;
             }
 

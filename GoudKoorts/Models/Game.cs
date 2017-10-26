@@ -15,6 +15,8 @@ namespace GoudKoorts.Models
 
         public List<Cart> Carts { get; set; }
 
+        public Ship Ship { get; set; }
+
         public List<StartingSquare> StartingPoints { get; set; }
 
         public Dictionary<int, SwitchableSquare> Switches { get; set; }
@@ -47,9 +49,26 @@ namespace GoudKoorts.Models
                 square = square.NeighbourWest;
             }
 
-            while (square.NeighbouNorth != null)
+            while (square.NeighbourNorth != null)
             {
-                square = square.NeighbouNorth;
+                square = square.NeighbourNorth;
+            }
+
+            return square;
+        }
+
+        public Square GetNorthEastSquare()
+        {
+            Square square = Square;
+
+            while (square.NeighbourEast != null)
+            {
+                square = square.NeighbourEast;
+            }
+
+            while (square.NeighbourNorth != null)
+            {
+                square = square.NeighbourNorth;
             }
 
             return square;
@@ -84,6 +103,20 @@ namespace GoudKoorts.Models
             }
         }
 
+        public void CreateShip()
+        {
+            if (Ship == null)
+            {
+                int chance = _random.Next(10);
+
+                if (chance > 8)
+                {
+                    WaterSquare beginSquare = GetNorthEastSquare() as WaterSquare;
+                    Ship = new Ship(beginSquare);
+                }
+            }
+        }
+
         public void MoveCarts()
         {
             List<Cart> needToBeRemoved = new List<Cart>();
@@ -101,6 +134,20 @@ namespace GoudKoorts.Models
             foreach (Cart cart in needToBeRemoved)
             {
                 Carts.Remove(cart);
+            }
+        }
+
+        public void MoveShip()
+        {
+            if (Ship != null)
+            {
+                Ship.Move();
+
+                if (Ship.Squares.All(s => s == null))
+                {
+                    Ship = null;
+                    Points += 10;
+                }
             }
         }
 

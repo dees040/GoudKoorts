@@ -61,7 +61,7 @@
     <Compile Include="Models\Squares\Standable\SwitchableSquare.cs" />
     <Compile Include="Models\Squares\Square.cs" />
     <Compile Include="Models\Squares\Static\StartingSquare.cs" />
-    <Compile Include="Models\Squares\Static\WaterSquare.cs" />
+    <Compile Include="Models\Squares\Standable\WaterSquare.cs" />
     <Compile Include="Models\Squares\Static\EmptySquare.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -39,13 +39,13 @@ namespace GoudKoorts.Controllers
         {
             if (_game.HasEnded())
             {
-                _outputView.Print(_game.GetNorthWestSquare());
+                _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
 
                 _outputView.PrintFinalMessage(_game.Points);
             }
             else
             {
-                _outputView.Print(_game.GetNorthWestSquare());
+                _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
 
                 HandleInput(_inputView.GetOption());
             }
@@ -69,23 +69,27 @@ namespace GoudKoorts.Controllers
         {
             if (_game.HasEnded())
             {
-                _outputView.Print(_game.GetNorthWestSquare());
+                _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
 
                 _outputView.PrintFinalMessage(_game.Points);
             }
             else
             {
-                Task.Delay(CalculateTime()).ContinueWith(t => HandleCarts());
+                Task.Delay(CalculateTime()).ContinueWith(t => HandleCartsAndShip());
             }
         }
 
-        private void HandleCarts()
+        private void HandleCartsAndShip()
         {
+            _game.MoveShip();
+
             _game.MoveCarts();
+
+            _game.CreateShip();
 
             _game.CreateCarts(Stop);
 
-            _outputView.Print(_game.GetNorthWestSquare());
+            _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
 
             RunTimer();
         }

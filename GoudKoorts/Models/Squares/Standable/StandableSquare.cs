@@ -17,7 +17,7 @@ namespace GoudKoorts.Models.Standable
             switch (direction)
             {
                 case Direction.North:
-                    square = NeighbouNorth;
+                    square = NeighbourNorth;
                     break;
                 case Direction.East:
                     square = NeighbourEast;

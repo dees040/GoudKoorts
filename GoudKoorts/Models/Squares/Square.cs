@@ -8,7 +8,7 @@ namespace GoudKoorts.Models
 {
     abstract public class Square
     {
-        public Square NeighbouNorth { get; set; }
+        public Square NeighbourNorth { get; set; }
         public Square NeighbourEast { get; set; }
         public Square NeighbourSouth { get; set; }
         public Square NeighbourWest { get; set; }

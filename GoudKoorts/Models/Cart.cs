@@ -64,7 +64,7 @@ namespace GoudKoorts.Models
                     // Check if switch is open.
                     SwitchableSquare switchable = next as SwitchableSquare;
 
-                    if (! switchable.AccessableFrom(Direction))
+                    if (!switchable.AccessableFrom(Direction))
                     {
                         InQueue = true;
 
@@ -78,8 +78,12 @@ namespace GoudKoorts.Models
 
             if (next is DockSquare)
             {
-                // TODO: Check if ship is connected!
-                CartEarnedPoints?.Invoke(this, new PointsEarnedEventArgs(1));
+                WaterSquare nextWater = (next.NeighbourNorth as WaterSquare);
+                if (nextWater.Ship != null && nextWater.Ship.IsDocked)
+                {
+                    nextWater.Ship.AddLoad();
+                    CartEarnedPoints?.Invoke(this, new PointsEarnedEventArgs(1));
+                }
             }
 
             UpdateLocation(next);
@@ -92,25 +96,29 @@ namespace GoudKoorts.Models
 
         public bool HasCollision(StandableSquare next)
         {
-            if (next.Cart == null)
+            if (next != null)
             {
-                return false;
+                if (next.Cart == null)
+                {
+                    return false;
+                }
+
+                // If the other car is not in queue they are riding very closely together.
+                if (!next.Cart.InQueue)
+                {
+                    return false;
+                }
+
+                if (next.Cart.Square is QueueableSquare && Square is QueueableSquare)
+                {
+                    InQueue = true;
+
+                    return false;
+                }
+
+                return true;
             }
-
-            // If the other car is not in queue they are riding very closely together.
-            if (!next.Cart.InQueue)
-            {
-                return false;
-            }
-
-            if (next.Cart.Square is QueueableSquare && Square is QueueableSquare)
-            {
-                InQueue = true;
-
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
         private void UpdateLocation(Square next)
