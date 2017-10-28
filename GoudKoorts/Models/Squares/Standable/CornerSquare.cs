@@ -26,5 +26,15 @@ namespace GoudKoorts.Models.Standable
 
             return Beginning;
         }
+
+        public override bool HandleMove(Cart cart)
+        {
+            cart.Direction = GetOutgoingDirection(cart.Direction);
+            cart.Square.Cart = null;
+            cart.Square = this;
+            this.Cart = cart;
+
+            return true;
+        }
     }
 }

@@ -37,5 +37,17 @@ namespace GoudKoorts.Models.Standable
         {
             return Beginning == Helper.Inverse(going);
         }
+
+        public override bool HandleMove(Cart cart)
+        {
+            if (AccessableFrom(cart.Direction))
+            {
+                return base.HandleMove(cart);
+            }
+
+            cart.InQueue = true;
+
+            return false;
+        }
     }
 }

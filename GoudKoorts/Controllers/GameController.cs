@@ -6,16 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace GoudKoorts.Controllers
 {
     public class GameController
     {
+        private Game _game;
         private Parser _parser = new Parser();
         private OutputView _outputView = new OutputView();
         private InputView _inputView = new InputView();
-        private Game _game;
-        private Thread _timer;
+
+        private Thread _thread;
+        private int _countDown = 4;
+        private System.Timers.Timer _timer;
 
         public GameController()
         {
@@ -24,88 +28,71 @@ namespace GoudKoorts.Controllers
 
         public void Start()
         {
-            _timer = new Thread(new ThreadStart(RunTimer));
-            _timer.Start();
+            _thread = new Thread(new ThreadStart(HandleInput));
+            _thread.Start();
 
-            Play();
+            _timer = new System.Timers.Timer { Interval = 200 };
+            _timer.Elapsed += new ElapsedEventHandler(Play);
+            _timer.Start();
         }
 
         public void Stop(object sender, EventArgs args)
         {
-            _timer.Abort();
+            _thread.Abort();
         }
 
-        private void Play()
+        private void Play(object sender, ElapsedEventArgs e)
         {
-            if (_game.HasEnded())
-            {
-                _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
-
-                _outputView.PrintFinalMessage(_game.Points);
-            }
-            else
-            {
-                _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
-
-                HandleInput(_inputView.GetOption());
-            }
-        }
-
-        private void HandleInput(int option)
-        {
-            if (option == 0)
-            {
-                Quit();
-
-                return;
-            }
-
-            _game.PrepareSwitchToggle(option);
-
-            Play();
-        }
-
-        private void RunTimer()
-        {
-            if (_game.HasEnded())
-            {
-                _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
-
-                _outputView.PrintFinalMessage(_game.Points);
-            }
-            else
-            {
-                Task.Delay(CalculateTime()).ContinueWith(t => HandleCartsAndShip());
-            }
-        }
-
-        private void HandleCartsAndShip()
-        {
-            _game.MoveShip();
-
-            _game.MoveCarts();
-
-            _game.CreateShip();
-
-            _game.CreateCarts(Stop);
+            _countDown--;
 
             _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
 
-            RunTimer();
+            if (_countDown != 0)
+            {
+                return;
+            }
+
+            _game.MoveAndCreateObjects(Stop);
+            SetGameSpeed();
+
+            if (_game.HasEnded())
+            {
+                _outputView.PrintFinalMessage(_game.Points);
+                _timer.Stop();
+            }
+
+            _countDown = 4;
+        }
+
+        private void HandleInput()
+        {
+            while (true)
+            {
+                int option = _inputView.GetOption();
+
+                if (option == 0)
+                {
+                    _timer.Stop();
+
+                    return;
+                }
+
+                _game.PrepareSwitchToggle(option);
+            }
+        }
+
+        private void SetGameSpeed()
+        {
+            _timer.Interval = CalculateTime();
         }
 
         private int CalculateTime()
         {
-            int startingTime = 2000;
+            int startingTime = 200;
 
-            startingTime = startingTime - _game.Points * 20;
+            startingTime = Math.Max(100, startingTime - _game.Points);
 
-            return startingTime < 500 ? 500 : startingTime;
-        }
-
-        private void Quit()
-        {
-            Console.WriteLine("Exiting..");
+            return startingTime < 40 ? 40 : startingTime;
         }
     }
 }

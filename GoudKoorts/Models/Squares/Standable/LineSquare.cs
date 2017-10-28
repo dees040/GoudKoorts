@@ -14,5 +14,14 @@ namespace GoudKoorts.Models.Standable
         {
             Alignment = alignment;
         }
+
+        public override bool HandleMove(Cart cart)
+        {
+            cart.Square.Cart = null;
+            cart.Square = this;
+            this.Cart = cart;
+
+            return true;
+        }
     }
 }

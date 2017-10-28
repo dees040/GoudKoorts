@@ -40,5 +40,13 @@ namespace GoudKoorts.Models.Standable
 
             return (StandableSquare)square;
         }
+
+        public virtual void RemoveCart()
+        {
+            this.Cart.Square = null;
+            this.Cart = null;
+        }
+
+        public abstract bool HandleMove(Cart cart);
     }
 }

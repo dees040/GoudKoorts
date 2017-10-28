@@ -32,14 +32,7 @@ namespace GoudKoorts.Models
 
             if (next == null)
             {
-                if (Square is QueueableSquare)
-                {
-                    InQueue = true;
-                    return;
-                }
-
-                Square.Cart = null;
-                Square = null;
+                Square.RemoveCart();
 
                 return;
             }
@@ -51,42 +44,10 @@ namespace GoudKoorts.Models
                 return;
             }
 
-            // If the next statement is true, then he is on the queuebale sqaures.
-            if (InQueue && next.Cart != null && next.Cart.InQueue)
+            if (next.HandleMove(this))
             {
-                return;
+                InQueue = false;
             }
-
-            if (next is CornerSquare)
-            {
-                if (next is SwitchableSquare)
-                {
-                    // Check if switch is open.
-                    SwitchableSquare switchable = next as SwitchableSquare;
-
-                    if (!switchable.AccessableFrom(Direction))
-                    {
-                        InQueue = true;
-
-                        return;
-                    }
-                }
-
-                CornerSquare corner = next as CornerSquare;
-                Direction = corner.GetOutgoingDirection(Direction);
-            }
-
-            if (next is DockSquare)
-            {
-                WaterSquare nextWater = (next.NeighbourNorth as WaterSquare);
-                if (nextWater.Ship != null && nextWater.Ship.IsDocked)
-                {
-                    nextWater.Ship.AddLoad();
-                    CartEarnedPoints?.Invoke(this, new PointsEarnedEventArgs(1));
-                }
-            }
-
-            UpdateLocation(next);
         }
 
         public bool HasCollision()
@@ -96,39 +57,30 @@ namespace GoudKoorts.Models
 
         public bool HasCollision(StandableSquare next)
         {
-            if (next != null)
+            if (next == null)
             {
-                if (next.Cart == null)
-                {
-                    return false;
-                }
-
-                // If the other car is not in queue they are riding very closely together.
-                if (!next.Cart.InQueue)
-                {
-                    return false;
-                }
-
-                if (next.Cart.Square is QueueableSquare && Square is QueueableSquare)
-                {
-                    InQueue = true;
-
-                    return false;
-                }
-
-                return true;
+                return false;
             }
-            return false;
+            else if (next.Cart == null)
+            {
+                return false;
+            }
+            // If the other car is not in queue they are riding very closely together.
+            else if (!next.Cart.InQueue)
+            {
+                return false;
+            }
+            else if (next.Cart.Square is QueueableSquare && Square is QueueableSquare)
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        private void UpdateLocation(Square next)
+        public void EarnedNewPoint()
         {
-            StandableSquare standable = next as StandableSquare;
-
-            Square.Cart = null;
-            Square = standable;
-            Square.Cart = this;
-            this.InQueue = false;
+            CartEarnedPoints?.Invoke(this, new PointsEarnedEventArgs(1));
         }
     }
 }

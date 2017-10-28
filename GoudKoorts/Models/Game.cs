@@ -77,11 +77,22 @@ namespace GoudKoorts.Models
             }
         }
 
+        public void MoveAndCreateObjects(EventHandler stopEvent)
+        {
+            MoveShip();
+
+            MoveCarts();
+
+            CreateShip();
+
+            CreateCarts(stopEvent);
+        }
+
         public void CreateCarts(EventHandler stopEvent)
         {
             int chance = _random.Next(11);
 
-            if (chance > CalculateChance() || Carts.Count == 0)
+            if (chance >= CalculateChance() || Carts.Count == 0)
             {
                 int startingPoint = _random.Next(StartingPoints.Count);
 
@@ -100,9 +111,9 @@ namespace GoudKoorts.Models
         {
             if (Ship == null)
             {
-                int chance = _random.Next(10);
+                int chance = _random.Next(11);
 
-                if (chance > CalculateChance())
+                if (chance >= CalculateChance())
                 {
                     WaterSquare beginSquare = GetNorthEastSquare() as WaterSquare;
                     Ship = new Ship(beginSquare);
