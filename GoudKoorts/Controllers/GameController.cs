@@ -14,8 +14,8 @@ namespace GoudKoorts.Controllers
     {
         private Game _game;
         private Parser _parser = new Parser();
-        private OutputView _outputView = new OutputView();
         private InputView _inputView = new InputView();
+        private OutputView _outputView = new OutputView();
 
         private Thread _thread;
         private int _countDown = 4;
@@ -31,34 +31,29 @@ namespace GoudKoorts.Controllers
             _thread = new Thread(new ThreadStart(HandleInput));
             _thread.Start();
 
-            _timer = new System.Timers.Timer { Interval = 200 };
+            _timer = new System.Timers.Timer { Interval = 250 };
             _timer.Elapsed += new ElapsedEventHandler(Play);
             _timer.Start();
-        }
-
-        public void Stop(object sender, EventArgs args)
-        {
-            _thread.Abort();
         }
 
         private void Play(object sender, ElapsedEventArgs e)
         {
             _countDown--;
 
-            _outputView.Print(_game.GetNorthWestSquare(), _game.Points);
+            _outputView.Print(_game.Square, _game.Points);
 
             if (_countDown != 0)
             {
                 return;
             }
 
-            _game.MoveAndCreateObjects(Stop);
+            _game.MoveAndCreateVehicles();
             SetGameSpeed();
 
             if (_game.HasEnded())
             {
-                _outputView.PrintFinalMessage(_game.Points);
-                _timer.Stop();
+                _timer.Enabled = false;
+                _outputView.PrintFinalMessage(_game.Square, _game.Points);
             }
 
             _countDown = 4;
@@ -66,13 +61,13 @@ namespace GoudKoorts.Controllers
 
         private void HandleInput()
         {
-            while (true)
+            while (!_game.HasEnded())
             {
                 int option = _inputView.GetOption();
 
                 if (option == 0)
                 {
-                    _timer.Stop();
+                    _timer.Enabled = false;
 
                     return;
                 }
@@ -88,7 +83,7 @@ namespace GoudKoorts.Controllers
 
         private int CalculateTime()
         {
-            int startingTime = 200;
+            int startingTime = 250;
 
             startingTime = Math.Max(100, startingTime - _game.Points);
 

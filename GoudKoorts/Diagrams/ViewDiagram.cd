@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GoudKoorts.Views.InputView">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\InputView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GoudKoorts.Views.OutputView">
+    <Position X="6.25" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAADAIAAACAAAAAAAAAAQAQAAAAAAAAAJFAAA=</HashCode>
+      <FileName>Views\OutputView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GoudKoorts.Controllers.GameController" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <AssociationLine Name="_inputView" Type="GoudKoorts.Views.InputView" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.672" Y="6.25" />
+        <Point X="5.672" Y="5.875" />
+        <Point X="4.75" Y="5.875" />
+        <Point X="4.75" Y="3.488" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.036" Y="0.123" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_outputView" Type="GoudKoorts.Views.OutputView" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.156" Y="6.25" />
+        <Point X="6.156" Y="5.875" />
+        <Point X="7.5" Y="5.875" />
+        <Point X="7.5" Y="5.286" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.1" Y="0.258" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAQCAACAgAAAAAIABBAAAAAEAAAAAkAAAACAAAAQ=</HashCode>
+      <FileName>Controllers\GameController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_inputView" />
+      <Field Name="_outputView" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,40 +1,38 @@
 ﻿using GoudKoorts.Models.Standable;
+using GoudKoorts.Models.Static;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoudKoorts.Models
+namespace GoudKoorts.Models.Vehicles
 {
-    public class Ship
+    public class Ship : Vehicle
     {
         public WaterSquare[] Squares { get; set; }
 
         public int Loads { get; set; }
 
-        public bool IsDocked { get; set; }
-        
-        public Ship(WaterSquare BeginSquare)
+        public Ship(WaterSquare BeginSquare) : base(10)
         {
             this.Squares = new WaterSquare[5];
             this.Squares[0] = BeginSquare;
             this.Squares[0].Ship = this;
-            this.IsDocked = false;
             this.Loads = 0;
         }
 
-        public void Move()
+        public override void Move()
         {
             //check if middle square is north of Dock
             if (Squares[2] != null && Squares[2].NeighbourSouth is DockSquare)
             {
                 if (Loads < 8)
                 {
-                    IsDocked = true;
+                    IsWaiting = true;
                     return;
                 }
-                IsDocked = false;
+                IsWaiting = false;
             }
             
             for (int i = 0; i < 5; i++)

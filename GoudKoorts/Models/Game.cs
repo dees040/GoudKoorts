@@ -1,6 +1,8 @@
 ﻿using GoudKoorts.Events;
 using GoudKoorts.Models.Squares.Static;
 using GoudKoorts.Models.Standable;
+using GoudKoorts.Models.Static;
+using GoudKoorts.Models.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,23 +35,6 @@ namespace GoudKoorts.Models
             Switches = new Dictionary<int, SwitchableSquare>();
         }
 
-        public Square GetNorthWestSquare()
-        {
-            Square square = Square;
-
-            while (square.NeighbourWest != null)
-            {
-                square = square.NeighbourWest;
-            }
-
-            while (square.NeighbourNorth != null)
-            {
-                square = square.NeighbourNorth;
-            }
-
-            return square;
-        }
-
         public Square GetNorthEastSquare()
         {
             Square square = Square;
@@ -77,7 +62,7 @@ namespace GoudKoorts.Models
             }
         }
 
-        public void MoveAndCreateObjects(EventHandler stopEvent)
+        public void MoveAndCreateVehicles()
         {
             MoveShip();
 
@@ -85,10 +70,10 @@ namespace GoudKoorts.Models
 
             CreateShip();
 
-            CreateCarts(stopEvent);
+            CreateCarts();
         }
 
-        public void CreateCarts(EventHandler stopEvent)
+        public void CreateCarts()
         {
             int chance = _random.Next(11);
 
@@ -101,8 +86,7 @@ namespace GoudKoorts.Models
                 StandableSquare standable = StartingPoints[startingPoint].NeighbourEast as StandableSquare;
                 standable.Cart = cart;
                 cart.Square = standable;
-                cart.CartHasCollision += stopEvent;
-                cart.CartEarnedPoints += EarnedPoints;
+                cart.VehicleEarnedPoints += EarnedPoints;
                 Carts.Add(cart);
             }
         }
@@ -117,6 +101,7 @@ namespace GoudKoorts.Models
                 {
                     WaterSquare beginSquare = GetNorthEastSquare() as WaterSquare;
                     Ship = new Ship(beginSquare);
+                    Ship.VehicleEarnedPoints += EarnedPoints;
                 }
             }
         }
@@ -136,6 +121,10 @@ namespace GoudKoorts.Models
             {
                 cart.Move();
 
+                // In Java errors will ocure if you remove something from an array/list
+                // while looping over the items. I wasn't sure what happens in C#, so I
+                // created an extra list which will be filled with carts that need to
+                // be removed after this loop.
                 if (cart.Square == null)
                 {
                     needToBeRemoved.Add(cart);
@@ -156,8 +145,8 @@ namespace GoudKoorts.Models
 
                 if (Ship.Squares.All(s => s == null))
                 {
+                    Ship.EarnedNewPoints();
                     Ship = null;
-                    Points += 10;
                 }
             }
         }

@@ -7,26 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoudKoorts.Models
+namespace GoudKoorts.Models.Vehicles
 {
-    public class Cart
+    public class Cart : Vehicle
     {
         public StandableSquare Square { get; set; }
 
         public Direction Direction { get; set; }
 
-        public bool InQueue { get; set; }
-
-        public event EventHandler CartHasCollision;
-        public event EventHandler CartEarnedPoints;
-
-        public Cart()
+        public Cart() : base(1)
         {
             Direction = Direction.East;
-            InQueue = false;
         }
 
-        public void Move()
+        public override void Move()
         {
             StandableSquare next = Square.Next(Direction);
 
@@ -39,14 +33,12 @@ namespace GoudKoorts.Models
 
             if (HasCollision(next))
             {
-                CartHasCollision?.Invoke(this, EventArgs.Empty);
-
                 return;
             }
 
             if (next.HandleMove(this))
             {
-                InQueue = false;
+                IsWaiting = false;
             }
         }
 
@@ -66,7 +58,7 @@ namespace GoudKoorts.Models
                 return false;
             }
             // If the other car is not in queue they are riding very closely together.
-            else if (!next.Cart.InQueue)
+            else if (!next.Cart.IsWaiting)
             {
                 return false;
             }
@@ -76,11 +68,6 @@ namespace GoudKoorts.Models
             }
 
             return true;
-        }
-
-        public void EarnedNewPoint()
-        {
-            CartEarnedPoints?.Invoke(this, new PointsEarnedEventArgs(1));
         }
     }
 }

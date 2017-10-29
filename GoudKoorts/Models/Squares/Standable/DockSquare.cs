@@ -1,4 +1,5 @@
-﻿using GoudKoorts.Events;
+﻿using GoudKoorts.Models.Static;
+using GoudKoorts.Models.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace GoudKoorts.Models.Standable
             if (waterSquare.HasDockedShip())
             {
                 waterSquare.Ship.AddLoad();
-                cart.EarnedNewPoint();
+                cart.EarnedNewPoints();
             }
 
             cart.Square.Cart = null;

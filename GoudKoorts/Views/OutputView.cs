@@ -2,6 +2,7 @@
 using GoudKoorts.Models.Squares.Standable;
 using GoudKoorts.Models.Squares.Static;
 using GoudKoorts.Models.Standable;
+using GoudKoorts.Models.Static;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -158,6 +159,11 @@ namespace GoudKoorts.Views
                     break;
             }
 
+            return CheckForVechiles(square, c);
+        }
+
+        private char CheckForVechiles(Square square, char c)
+        {
             if (square is StandableSquare)
             {
                 StandableSquare standableSquare = square as StandableSquare;
@@ -166,33 +172,34 @@ namespace GoudKoorts.Views
                 {
                     c = '#';
                 }
-                else if (standableSquare is WaterSquare && (standableSquare as WaterSquare).Ship != null)
+            }
+            else if (square is WaterSquare && (square as WaterSquare).Ship != null)
+            {
+                int index = ((square as WaterSquare).Ship.Squares.ToList().IndexOf((square as WaterSquare)));
+                switch (index)
                 {
-                    int index = ((standableSquare as WaterSquare).Ship.Squares.ToList().IndexOf((standableSquare as WaterSquare)));
-                    switch (index)
-                    {
-                        case 0:
-                            c = '<';
-                            break;
-                        case 1:
-                        case 2:
-                        case 3:
-                            c = '=';
-                            break;
-                        case 4:
-                            c = '>';
-                            break;
-                    }
+                    case 0:
+                        c = '<';
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                        c = '=';
+                        break;
+                    case 4:
+                        c = '>';
+                        break;
                 }
             }
 
             return c;
         }
 
-        public void PrintFinalMessage(int points)
+        public void PrintFinalMessage(Square square, int points)
         {
+            Print(square, points);
             Console.WriteLine("\n\nThe carts have collision, game over.. You ended with " + points + " points.");
-            Console.WriteLine("Press q to exit.");
+            Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
         }
 

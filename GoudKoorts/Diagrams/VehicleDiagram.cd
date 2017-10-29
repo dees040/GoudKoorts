@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GoudKoorts.Models.Vehicles.Cart">
+    <Position X="3.25" Y="4.25" Width="2.25" />
+    <InheritanceLine Type="GoudKoorts.Models.Vehicles.Vehicle" FixedToPoint="true">
+      <Path>
+        <Point X="6.375" Y="4.093" />
+        <Point X="6.375" Y="5.165" />
+        <Point X="5.5" Y="5.165" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAABAAACAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\Vehicles\Cart.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Direction" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GoudKoorts.Models.Vehicles.Ship">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="GoudKoorts.Models.Vehicles.Vehicle" FixedToPoint="true">
+      <Path>
+        <Point X="6.375" Y="4.093" />
+        <Point X="6.375" Y="5.172" />
+        <Point X="7.25" Y="5.172" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAABABAAAAAAAA=</HashCode>
+      <FileName>Models\Vehicles\Ship.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GoudKoorts.Models.Vehicles.Vehicle">
+    <Position X="5.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAICAAAAAgAAAAAAAAIIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Vehicles\Vehicle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GoudKoorts.Direction" Collapsed="true">
+    <Position X="3.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAIAAAAAEAAAAAAAAAAAAAABAAQ=</HashCode>
+      <FileName>Direction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

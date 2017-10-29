@@ -50,9 +50,9 @@
     <Compile Include="Direction.cs" />
     <Compile Include="Events\PointsEarnedEventArgs.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Vehicles\Cart.cs" />
     <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\Ship.cs" />
+    <Compile Include="Models\Vehicles\Ship.cs" />
     <Compile Include="Models\Squares\Standable\CornerSquare.cs" />
     <Compile Include="Models\Squares\Standable\DockSquare.cs" />
     <Compile Include="Models\Squares\Standable\LineSquare.cs" />
@@ -61,8 +61,9 @@
     <Compile Include="Models\Squares\Standable\SwitchableSquare.cs" />
     <Compile Include="Models\Squares\Square.cs" />
     <Compile Include="Models\Squares\Static\StartingSquare.cs" />
-    <Compile Include="Models\Squares\Standable\WaterSquare.cs" />
+    <Compile Include="Models\Squares\Static\WaterSquare.cs" />
     <Compile Include="Models\Squares\Static\EmptySquare.cs" />
+    <Compile Include="Models\Vehicles\Vehicle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\InputView.cs" />
@@ -70,7 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
+    <None Include="Diagrams\ControllerDiagram.cd" />
+    <None Include="Diagrams\ModelDiagram.cd" />
+    <None Include="Diagrams\ViewDiagram.cd" />
+    <None Include="Diagrams\SquareDiagram.cd" />
+    <None Include="Diagrams\VehicleDiagram.cd" />
+    <None Include="Diagrams\MainClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

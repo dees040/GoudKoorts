@@ -2,6 +2,7 @@
 using GoudKoorts.Models.Squares.Standable;
 using GoudKoorts.Models.Squares.Static;
 using GoudKoorts.Models.Standable;
+using GoudKoorts.Models.Static;
 using System;
 using System.IO;
 
@@ -20,7 +21,7 @@ namespace GoudKoorts.Controllers
 
         public Game Parse()
         {
-            Game map = new Game();
+            Game game = new Game();
             Square north = null, west = null;
 
             foreach (string line in File.ReadAllLines(_file))
@@ -31,15 +32,20 @@ namespace GoudKoorts.Controllers
 
                     if (square is SwitchableSquare)
                     {
-                        map.Switches.Add(_switches, square as SwitchableSquare);
+                        game.Switches.Add(_switches, square as SwitchableSquare);
                         _switches++;
                     }
                     else if (square is StartingSquare)
                     {
-                        map.StartingPoints.Add(square as StartingSquare);
+                        game.StartingPoints.Add(square as StartingSquare);
                     }
 
                     SetNeighbours(square, north, west);
+
+                    if (game.Square == null)
+                    {
+                        game.Square = square;
+                    }
 
                     west = square;
                     north = GetNextNorth(north);
@@ -49,9 +55,7 @@ namespace GoudKoorts.Controllers
                 west = null;
             }
 
-            map.Square = north;
-
-            return map;
+            return game;
         }
 
         private void SetNeighbours(Square square, Square north, Square west)

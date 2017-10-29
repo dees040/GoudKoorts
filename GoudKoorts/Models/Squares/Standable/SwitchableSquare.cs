@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoudKoorts.Models.Vehicles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,7 +46,7 @@ namespace GoudKoorts.Models.Standable
                 return base.HandleMove(cart);
             }
 
-            cart.InQueue = true;
+            cart.IsWaiting = true;
 
             return false;
         }

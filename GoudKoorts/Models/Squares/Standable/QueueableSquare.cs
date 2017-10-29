@@ -1,4 +1,5 @@
 ﻿using GoudKoorts.Models.Standable;
+using GoudKoorts.Models.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,16 @@ namespace GoudKoorts.Models.Squares.Standable
 
         public override void RemoveCart()
         {
-            this.Cart.InQueue = true;
+            this.Cart.IsWaiting = true;
 
             return;
         }
 
         public override bool HandleMove(Cart cart)
         {
-            if (this.Cart != null && this.Cart.InQueue)
+            if (this.Cart != null && this.Cart.IsWaiting)
             {
-                cart.InQueue = true;
+                cart.IsWaiting = true;
 
                 return false;
             }
