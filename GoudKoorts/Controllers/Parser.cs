@@ -150,11 +150,13 @@ namespace GoudKoorts.Controllers
 
         private string GuessPath()
         {
-            string path = "..\\..\\map.txt";
-
-            if (File.Exists(path))
+            if (File.Exists("map.txt"))
             {
-                return path;
+                return "map.txt";
+            }
+            else if (File.Exists("..\\..\\map.txt"))
+            {
+                return "..\\..\\map.txt";
             }
 
             Console.WriteLine("We couldn't find the default map.txt file. Please press enter to select it manually.");
